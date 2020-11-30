@@ -1,0 +1,23 @@
+syntax = "proto2";
+package protocol;
+
+option java_package = "com.fire.im.common.protocol";
+option java_outer_classname = "ImMessage";
+
+//字段编号19000 ~ 19999被ProtocolBuffers作为保留字段
+message RequestMessage {
+    //required 必须赋值
+    required string token = 1;
+    required string msg = 2;
+    required int32 type = 3;
+    required string userId=4;
+
+}
+
+message ResponseMessage {
+
+  required string token = 1;
+  required string msg = 2;
+  required int32 type = 3;
+  required string userId=4;
+}

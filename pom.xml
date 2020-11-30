@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.fire.im</groupId>
+    <artifactId>fire-im</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>fire im</name>
+    <packaging>pom</packaging>
+    <description>parent project</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.0</version>
+<!--        <relativePath/>-->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <lombok.version>1.18.16</lombok.version>
+        <netty.version>4.1.54.Final</netty.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <apache.common.version>3.11</apache.common.version>
+        <apache.common.codec>1.15</apache.common.codec>
+        <guava.version>29.0-jre</guava.version>
+        <zkclient.version>0.11</zkclient.version>
+        <protobuf.version>3.4.0</protobuf.version>
+        <fire-im.version>0.0.1-SNAPSHOT</fire-im.version>
+        <netflix.feign.version>8.18.0</netflix.feign.version>
+        <knife4j.starter.version>2.0.4</knife4j.starter.version>
+        <javax-validation.version>2.0.1.Final</javax-validation.version>
+    </properties>
+
+<!--    <modules>-->
+<!--        <module>fire-im-server</module>-->
+<!--        <module>fire-im-route</module>-->
+<!--        <module>fire-im-common</module>-->
+<!--        <module>fire-im-server-api</module>-->
+<!--        <module>fire-im-route-api</module>-->
+<!--    </modules>-->
+
+    <dependencyManagement>
+        <dependencies>
+            <!--lombok project-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!--netty-->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fire.im.common</groupId>
+                <artifactId>fire-im-common</artifactId>
+                <version>${fire-im.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fire.im.server.api</groupId>
+                <artifactId>fire-im-server-api</artifactId>
+                <version>${fire-im.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fire.im.route.api</groupId>
+                <artifactId>fire-im-route-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <!--alibaba fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--apache common lang3-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${apache.common.codec}</version>
+            </dependency>
+
+            <!--google guava-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!--google protobuf-->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <!--google protobuf util-->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java-util</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <!--zookeeper client-->
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zkclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.netflix.feign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>${netflix.feign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.netflix.feign</groupId>
+                <artifactId>feign-jackson</artifactId>
+                <version>${netflix.feign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax-validation.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

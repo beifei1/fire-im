@@ -10,9 +10,11 @@ import com.fire.im.route.utils.ServerHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.net.URI;
 import java.util.Objects;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: wangzc
@@ -48,7 +50,14 @@ public class RouteServiceImpl implements IRouteService {
 
     @Override
     public void userOffline(UserOfflineDTO param) {
-        redisUtil.del(RouterUtil.Consts.ROUTE_INFO_PREFIX + param.getUserId());
+
+        List<String> keys = param.getUserIds().stream().map(userId -> RouterUtil.Consts.ROUTE_INFO_PREFIX + userId).collect(Collectors.toList());
+
+        if (!CollectionUtils.isEmpty(keys)) {
+            redisUtil.del(keys.toArray(new String[keys.size()]));
+        }
+
+
     }
 
     @Override

@@ -59,6 +59,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+                <inherited>false</inherited>
             </plugin>
         </plugins>
     </build>

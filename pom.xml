@@ -6,7 +6,7 @@
     <groupId>com.fire.im</groupId>
     <artifactId>fire-im</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>fire im</name>
+    <name>fire-im</name>
     <packaging>pom</packaging>
     <description>parent project</description>
 
@@ -33,13 +33,13 @@
         <javax-validation.version>2.0.1.Final</javax-validation.version>
     </properties>
 
-<!--    <modules>-->
-<!--        <module>fire-im-server</module>-->
-<!--        <module>fire-im-route</module>-->
-<!--        <module>fire-im-common</module>-->
-<!--        <module>fire-im-server-api</module>-->
-<!--        <module>fire-im-route-api</module>-->
-<!--    </modules>-->
+    <modules>
+        <module>fire-im-common</module>
+        <module>fire-im-server-api</module>
+        <module>fire-im-route-api</module>
+        <module>fire-im-server</module>
+        <module>fire-im-route</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>

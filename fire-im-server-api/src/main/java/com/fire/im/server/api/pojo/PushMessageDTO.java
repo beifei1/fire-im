@@ -1,8 +1,6 @@
 package com.fire.im.server.api.pojo;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -14,6 +12,8 @@ import java.io.Serializable;
 @Data
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class PushMessageDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

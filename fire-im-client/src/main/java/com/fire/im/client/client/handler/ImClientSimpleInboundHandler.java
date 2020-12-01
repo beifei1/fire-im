@@ -29,7 +29,7 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
 
         //直接打印消息
         if (msg.getType() != Constants.CommandType.HEARTBEAT) {
-            log.info("收到消息,from: {}, msg: {}", msg.getUserId(), msg.getMsg());
+            System.err.println("收到消息,from: " + msg.getUserId() + ", msg: " + msg.getMsg());
         }
     }
 

@@ -1,14 +1,17 @@
-package com.fire.im.server.session.memory;
+package com.fire.im.server.session.holder;
 
 import com.fire.im.server.session.Session;
 import com.fire.im.server.session.SessionHolder;
 import com.fire.im.server.utils.Consts;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.Lists;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -50,6 +53,8 @@ public class InMemorySessionHolder implements SessionHolder {
         }
         Session session = loadingCache.get(userId);
         session.put(Consts.SessionConsts.SOCKET_CHANNEL, socketChannel);
+
+        loadingCache.put(userId, session);
         return Boolean.TRUE;
     }
 
@@ -79,6 +84,14 @@ public class InMemorySessionHolder implements SessionHolder {
             }
         }
         return StringUtils.EMPTY;
+    }
+
+    @Override
+    public List<String> getOnlineUserId() {
+        Map<String,Session> sessions = loadingCache.asMap();
+        List<String> userIds = Lists.newArrayListWithCapacity(sessions.size());
+        sessions.forEach((k,v) -> userIds.add(k));
+        return userIds;
     }
 
 }

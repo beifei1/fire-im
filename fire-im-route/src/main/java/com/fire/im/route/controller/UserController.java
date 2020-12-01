@@ -102,7 +102,7 @@ public class UserController {
     @PostMapping("/offline")
     @ApiOperation("用户下线")
     public Response<Void> offline(@Valid @RequestBody UserOfflineDTO param) {
-        log.info("用户:{} offline");
+        log.info("用户: {} offline", param.getUserIds().toString());
         routeService.userOffline(param);
         return Response.success();
     }

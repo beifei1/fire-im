@@ -8,6 +8,7 @@ import com.fire.im.server.config.AppGlobalConfig;
 import com.fire.im.server.session.SessionHolder;
 import com.fire.im.server.utils.ServerUtil;
 import com.fire.im.server.utils.SpringBeanHolder;
+import com.google.common.collect.Lists;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -38,7 +39,7 @@ public class ServerSimpleInboundHandler extends SimpleChannelInboundHandler<ImMe
 
         if (StringUtils.isNotBlank(userId)) {
             log.info("连接断开, 准备用户{}下线", userId);
-            SpringBeanHolder.getBean(ServerUtil.class).offline(userId);
+            SpringBeanHolder.getBean(ServerUtil.class).offline(Lists.newArrayList(userId));
         }
     }
 
@@ -49,9 +50,11 @@ public class ServerSimpleInboundHandler extends SimpleChannelInboundHandler<ImMe
             String secret = SpringBeanHolder.getBean(AppGlobalConfig.class).getTokenSecret();
             //计算出的token
             String token = DigestUtils.md5Hex(msg.getUserId() + secret);
+
             if (!StringUtils.equals(token, msg.getToken())) {
                 log.info("用户鉴权失败,userId: {}, token: {}",msg.getUserId(), msg.getToken());
                 ctx.channel().close();
+                return;
             } else {
                 //标识为已鉴权
                 log.info("用户鉴权成功,userId: {}, token: {}",msg.getUserId(), msg.getToken());
@@ -68,6 +71,7 @@ public class ServerSimpleInboundHandler extends SimpleChannelInboundHandler<ImMe
 
         //处理心跳消息
         if (msg.getType() == Constants.CommandType.HEARTBEAT){
+
             NettyAttrUtil.updateReaderTime(ctx.channel(),System.currentTimeMillis());
             //向客户端响应 pong 消息
             ImMessage.RequestMessage heart = ImMessage.RequestMessage.newBuilder()

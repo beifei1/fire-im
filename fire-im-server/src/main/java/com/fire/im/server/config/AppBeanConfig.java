@@ -3,7 +3,7 @@ package com.fire.im.server.config;
 import com.fire.im.route.api.RouteAPI;
 import com.fire.im.server.session.Session;
 import com.fire.im.server.session.SessionHolder;
-import com.fire.im.server.session.memory.InMemorySessionHolder;
+import com.fire.im.server.session.holder.InMemorySessionHolder;
 import com.fire.im.server.task.Registration;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -13,6 +13,7 @@ import feign.Request;
 import feign.Retryer;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.I0Itec.zkclient.ZkClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +94,9 @@ public class AppBeanConfig {
     @Bean(name = "localSessionStore")
     public LoadingCache<String, Session> loadingCache() {
         return CacheBuilder.newBuilder()
-                .maximumSize(100).build(new CacheLoader<String, Session>() {
+                .maximumSize(10000)
+//                .expireAfterWrite()
+                .build(new CacheLoader<String, Session>() {
                     @Override
                     public Session load(String s) throws Exception {
                         return null;
@@ -107,6 +110,7 @@ public class AppBeanConfig {
      * @return
      */
     @Bean
+    @SneakyThrows
     SessionHolder memorySessionStore() {
         return new InMemorySessionHolder();
     }

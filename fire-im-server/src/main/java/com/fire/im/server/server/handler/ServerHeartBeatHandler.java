@@ -5,6 +5,7 @@ import com.fire.im.common.utils.NettyAttrUtil;
 import com.fire.im.server.config.AppGlobalConfig;
 import com.fire.im.server.session.SessionHolder;
 import com.fire.im.server.utils.ServerUtil;
+import com.google.common.collect.Lists;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class ServerHeartBeatHandler implements HeartBeatHandler {
                 log.warn("客户端 {}心跳超时 {}ms,需要关闭连接", userId, now - lastReaderTime);
             }
             //下线用户
-            serverUtil.offline(userId);
+            serverUtil.offline(Lists.newArrayList(userId));
             context.channel().close();
         }
     }

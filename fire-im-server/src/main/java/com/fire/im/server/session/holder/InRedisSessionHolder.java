@@ -1,8 +1,10 @@
-package com.fire.im.server.session.redis;
+package com.fire.im.server.session.holder;
 
 import com.fire.im.server.session.Session;
 import com.fire.im.server.session.SessionHolder;
 import io.netty.channel.socket.nio.NioSocketChannel;
+
+import java.util.List;
 
 /**
  * 使用redis map数据结构
@@ -32,6 +34,11 @@ public class InRedisSessionHolder implements SessionHolder {
 
     @Override
     public String getUserId(NioSocketChannel socketChannel) {
+        return null;
+    }
+
+    @Override
+    public List<String> getOnlineUserId() {
         return null;
     }
 }

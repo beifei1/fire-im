@@ -7,6 +7,7 @@ import com.fire.im.server.api.pojo.PushMessageDTO;
 import com.fire.im.server.config.AppGlobalConfig;
 import com.fire.im.server.server.initializer.ServerInitializer;
 import com.fire.im.server.session.SessionHolder;
+import com.fire.im.server.utils.ServerUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -19,11 +20,13 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 import java.util.Objects;
+import java.util.List;
 
 /**
  * @Author: wangzc
@@ -39,6 +42,9 @@ public class Server {
 
     @Autowired
     private SessionHolder sessionStore;
+
+    @Autowired
+    private ServerUtil serverUtil;
 
     private EventLoopGroup boss = new NioEventLoopGroup();
     private EventLoopGroup work = new NioEventLoopGroup();
@@ -74,7 +80,20 @@ public class Server {
         boss.shutdownGracefully().syncUninterruptibly();
         work.shutdownGracefully().syncUninterruptibly();
 
+        log.info("通知路由服务下线相关用户...");
+        offlineUser();
         log.info("服务器已关闭!!!!");
+    }
+
+
+    /**
+     * 通知路由服务所有用户下线
+     */
+    private void offlineUser() {
+        List<String> userIds = sessionStore.getOnlineUserId();
+        if (CollectionUtils.isEmpty(userIds)) {
+            serverUtil.offline(userIds);
+        }
     }
 
     /**

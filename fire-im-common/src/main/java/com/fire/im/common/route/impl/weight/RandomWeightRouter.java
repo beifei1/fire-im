@@ -5,12 +5,12 @@ import com.fire.im.common.route.Router;
 import java.util.*;
 
 /**
- * 权重随机路由
+ * 随机权重路由
  * @Author: wangzc
  * @Date: 2020/11/25 10:27
  */
 
-public class WeightRouter implements Router {
+public class RandomWeightRouter implements Router {
 
     private TreeMap<Double,String> weightMap = new TreeMap<>();
 
@@ -27,7 +27,7 @@ public class WeightRouter implements Router {
     public String select() {
         //累加值 * 0~1 random number
         Double random = this.weightMap.lastKey() * Math.random();
-        SortedMap<Double,String> tailMap = this.weightMap.tailMap(random, false);
+        SortedMap<Double, String> tailMap = this.weightMap.tailMap(random, false);
         return this.weightMap.get(tailMap.firstKey());
     }
 

@@ -1,6 +1,7 @@
 package com.fire.im.server.session;
 
 import io.netty.channel.socket.nio.NioSocketChannel;
+import java.util.List;
 
 /**
  * @Author: wangzc
@@ -44,5 +45,11 @@ public interface SessionHolder {
      * @return
      */
     String getUserId(NioSocketChannel socketChannel);
+
+    /**
+     * 获取所有在线用户
+     * @return
+     */
+    List<String> getOnlineUserId();
 
 }

@@ -31,18 +31,18 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
         socketChannel.pipeline()
                 //12秒没有读取到消息就触发自定义操作
-                .addLast("InboundHeartBeat",new IdleStateHandler(12,0,0))
+                .addLast("inboundHeartBeat",new IdleStateHandler(12,0,0))
                 //入站半包处理
-                .addLast("InboundPack", new ProtobufVarint32FrameDecoder())
+                .addLast("inboundPack", new ProtobufVarint32FrameDecoder())
                 //入站protobuf解码器
-                .addLast("InboundProtobufDecoder", new ProtobufDecoder(ImMessage.RequestMessage.getDefaultInstance()))
+                .addLast("inboundProtobufDecoder", new ProtobufDecoder(ImMessage.RequestMessage.getDefaultInstance()))
                  //出站在消息头中加入int32标识消息长度
-                .addLast("OutboundPackAdd", new ProtobufVarint32LengthFieldPrepender())
+                .addLast("outboundPackAdd", new ProtobufVarint32LengthFieldPrepender())
                 //出站protobuf编码器
-                .addLast("OutboundProtobufEncoder", new ProtobufEncoder())
+                .addLast("outboundProtobufEncoder", new ProtobufEncoder())
                 //入站身份认证
-                .addLast("InboundAuthentication", authenticationHandler)
+                .addLast("inboundAuthentication", authenticationHandler)
                 //入站其他处理
-                .addLast("InboundOther", simpleInboundHandler);
+                .addLast("inboundOther", simpleInboundHandler);
     }
 }

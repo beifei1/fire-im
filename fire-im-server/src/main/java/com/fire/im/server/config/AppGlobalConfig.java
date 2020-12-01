@@ -1,6 +1,5 @@
 package com.fire.im.server.config;
 
-import com.fire.im.server.session.enums.StoreTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;

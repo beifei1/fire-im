@@ -28,7 +28,7 @@ route
 
 ```properties
 fire-im.route.zk-address=zookeeper地址,ip:port
-fire-im.route.route-strategy=使用的路由策略(一致性hash/轮询/随机/权重随机/第一个/最后一个)
+fire-im.route.route-strategy=使用的路由策略
 redis config
 ```
 

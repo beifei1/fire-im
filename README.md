@@ -10,7 +10,11 @@ zookeeper，redis
 
 单聊，广播，消息记录
 
-##### 测试
+##### 路由策略
+
+轮询,随机,权重随机,一致性hash,第一个,最后一个
+
+##### 使用
 
 server
 
@@ -34,5 +38,5 @@ client
 fire-im.client.route-url=路由服务地址
 ```
 
-依次启动server,route和client
+启动server,route和client,通过route server/doc.html对指定用户推送消息
 

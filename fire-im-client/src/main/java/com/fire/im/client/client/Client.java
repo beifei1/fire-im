@@ -16,6 +16,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class Client {
 
-    EventLoopGroup group = new NioEventLoopGroup(0, new DefaultThreadFactory("im-work"));
+    EventLoopGroup group = new NioEventLoopGroup(0, new DefaultThreadFactory("fire-im"));
 
     @Autowired
     RouteAPI routeAPI;

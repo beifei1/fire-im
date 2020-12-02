@@ -67,7 +67,7 @@ public class Server {
         ChannelFuture future = bootstrap.bind().sync();
 
         if (future.isSuccess()) {
-            log.info("启动IM服务器成功！");
+            log.info("successfully start the IM server!");
         }
     }
 

@@ -36,7 +36,7 @@ public class Registration extends Thread {
             //创建临时节点
             zooUtil.createEphemeralNode(path);
 
-            log.info("向命名服务注册本地服务信息成功!");
+            log.info("registration local service information success!");
         }
     }
 

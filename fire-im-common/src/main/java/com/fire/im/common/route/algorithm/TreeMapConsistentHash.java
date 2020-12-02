@@ -38,7 +38,7 @@ public class TreeMapConsistentHash {
     }
 
     /**
-     * 加入节点
+     * hash落环
      * @param key
      * @param value
      */
@@ -70,7 +70,7 @@ public class TreeMapConsistentHash {
     }
 
     /**
-     * hash落环
+     * hash计算
      * @param value
      * @return
      */

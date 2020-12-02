@@ -57,15 +57,12 @@ public class AppBeanConfig {
     @Bean
     CommandLineRunner runner() {
         return args -> {
-            log.info("开始向命名服务注册本地服务信息...");
-
             //节点名称
             String addr = InetAddress.getLocalHost().getHostAddress();
             String nodeName = "ip-" + addr + ":" + appConfig.getNettyPort() + ":" + httpServerPort + ":" + appConfig.getWeight();
 
             //声明thread
             Registration registration = new Registration(nodeName);
-            registration.setName("fire-im-server-registry-thread-");
 
             //使用线程池调度
             ExecutorService pool = Executors.newFixedThreadPool(1);
@@ -95,6 +92,7 @@ public class AppBeanConfig {
     public LoadingCache<String, Session> loadingCache() {
         return CacheBuilder.newBuilder()
                 .maximumSize(10000)
+//                .expireAfterAccess()
 //                .expireAfterWrite()
                 .build(new CacheLoader<String, Session>() {
                     @Override

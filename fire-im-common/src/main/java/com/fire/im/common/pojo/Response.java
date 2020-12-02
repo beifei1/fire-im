@@ -20,8 +20,8 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String OK = "operate successfully!";
-    private static final String FAIL = "operate fail!";
+    private static final String OK = "ok";
+    private static final String FAIL = "fail";
 
     private Integer success;
 

@@ -12,6 +12,8 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.InetSocketAddress;
+
 /**
  * @Author: wangzc
  * @Date: 2020/11/26 16:25
@@ -22,8 +24,9 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessage.RequestMessage msg) throws Exception {
+        InetSocketAddress addr = (InetSocketAddress) ctx.channel().remoteAddress();
+        log.info("【读取消息】 - From {}, Type:{}", addr.getAddress().getHostAddress(), msg.getType());
         if (msg.getType() == Constants.CommandType.HEARTBEAT) {
-            log.info("收到服务端心跳响应!");
             NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         }
 
@@ -47,7 +50,7 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
             IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
 
             if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
-                log.info("向服务器发送心跳!");
+                log.info("向服务器发送心跳消息!");
                 //向服务器发送ping消息
                 ImMessage.RequestMessage heart = ImMessage.RequestMessage.newBuilder()
                         .setToken("ping")

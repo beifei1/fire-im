@@ -94,6 +94,8 @@ public class UserController {
         return Response.success(resp);
     }
 
+//    public Response<RegisterVO>
+
     /**
      * 用户下线，清除路由关系
      * @param param

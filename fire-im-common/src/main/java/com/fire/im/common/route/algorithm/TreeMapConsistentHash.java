@@ -78,10 +78,7 @@ public class TreeMapConsistentHash {
         byte[] digest = DigestUtils.md5(value);
 
         // hash code, Truncate to 32-bits
-        long hashCode = ((long) (digest[3] & 0xFF) << 24)
-                | ((long) (digest[2] & 0xFF) << 16)
-                | ((long) (digest[1] & 0xFF) << 8)
-                | (digest[0] & 0xFF);
+        long hashCode = ((long) (digest[3] & 0xFF) << 24) | ((long) (digest[2] & 0xFF) << 16) | ((long) (digest[1] & 0xFF) << 8) | (digest[0] & 0xFF);
 
         long truncateHashCode = hashCode & 0xffffffffL;
         return truncateHashCode;

@@ -1,8 +1,8 @@
 package com.fire.im.server.server.initializer;
 
 import com.fire.im.common.protocol.ImMessage;
-import com.fire.im.server.server.handler.ServerAuthenticationHandler;
-import com.fire.im.server.server.handler.ServerSimpleInboundHandler;
+import com.fire.im.server.server.handler.tcp.ServerAuthenticationHandler;
+import com.fire.im.server.server.handler.tcp.ServerSimpleInboundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;

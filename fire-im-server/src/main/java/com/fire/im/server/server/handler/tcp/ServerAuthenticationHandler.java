@@ -1,4 +1,4 @@
-package com.fire.im.server.server.handler;
+package com.fire.im.server.server.handler.tcp;
 
 import com.fire.im.common.protocol.ImMessage;
 import com.fire.im.common.utils.Constants;

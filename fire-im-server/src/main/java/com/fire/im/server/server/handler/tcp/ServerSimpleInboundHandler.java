@@ -1,10 +1,11 @@
-package com.fire.im.server.server.handler;
+package com.fire.im.server.server.handler.tcp;
 
 import com.fire.im.common.handler.HeartBeatHandler;
 import com.fire.im.common.protocol.ImMessage;
 import com.fire.im.common.utils.Constants;
 import com.fire.im.common.utils.NettyAttrUtil;
 import com.fire.im.server.config.AppGlobalConfig;
+import com.fire.im.server.server.handler.ServerHeartBeatHandler;
 import com.fire.im.server.session.SessionHolder;
 import com.fire.im.server.utils.ServerUtil;
 import com.fire.im.server.utils.SpringBeanHolder;

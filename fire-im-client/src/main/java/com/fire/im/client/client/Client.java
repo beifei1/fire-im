@@ -60,13 +60,17 @@ public class Client {
         );
 
         log.info("用户登录结果: {}", resposne.toString());
-        //启动客户端
-        startClient(resposne.getData());
-        //向服务器进行注册
-        loginImServer(resposne.getData().getToken(), resposne.getData().getUserId());
-        //把客户端信息保存到本地缓存
-        loadingCache.put("token", resposne.getData().getToken());
-        loadingCache.put("userId", resposne.getData().getUserId());
+
+        if (resposne.getSuccess() == 1) {
+            //启动客户端
+            startClient(resposne.getData());
+            //向服务器进行注册
+            loginImServer(resposne.getData().getToken(), resposne.getData().getUserId());
+            //把客户端信息保存到本地缓存
+            loadingCache.put("token", resposne.getData().getToken());
+            loadingCache.put("userId", resposne.getData().getUserId());
+        }
+
     }
 
     /**

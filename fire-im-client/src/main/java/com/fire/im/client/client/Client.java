@@ -52,7 +52,6 @@ public class Client {
      */
     @PostConstruct
     private void init() {
-
         Response<LoginVO> resposne = routeAPI.login(
                 UserLoginDTO.builder()
                         .account(appConfig.getUsername())

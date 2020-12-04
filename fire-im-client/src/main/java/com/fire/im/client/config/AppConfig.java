@@ -15,7 +15,6 @@ public class AppConfig {
 
     private String routeUrl;
 
-
     private String username;
 
     private String password;

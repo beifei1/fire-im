@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 /**
  * @Author: wangzc
@@ -101,6 +102,15 @@ public class Client {
                 .build();
         ChannelFuture future = channel.writeAndFlush(login);
         future.addListener((ChannelFutureListener) channelFuture -> System.out.println("login server success!!!"));
+    }
+
+    /**
+     * 停止IM服务器
+     */
+    public void shutdown() {
+        if (Objects.nonNull(channel)) {
+            channel.close();
+        }
     }
 
 }

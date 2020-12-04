@@ -13,6 +13,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.Objects;
 
 /**
  * @Author: wangzc
@@ -21,6 +22,12 @@ import java.net.InetSocketAddress;
 @Slf4j
 @ChannelHandler.Sharable
 public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<ImMessage.RequestMessage> {
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        //TODO 断线重连逻辑
+        super.channelInactive(ctx);
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessage.RequestMessage msg) throws Exception {
@@ -72,7 +79,6 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        //客户端和服务端建立连接时调用
         log.info("im server connect success!");
     }
 

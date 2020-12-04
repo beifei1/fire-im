@@ -1,6 +1,7 @@
 package com.fire.im.client.client;
 
 import com.fire.im.client.client.initialzer.ClientHandlerInitialzer;
+import com.fire.im.client.config.AppConfig;
 import com.fire.im.common.pojo.Response;
 import com.fire.im.common.protocol.ImMessage;
 import com.fire.im.common.utils.Constants;
@@ -43,6 +44,9 @@ public class Client {
     @Autowired
     LoadingCache loadingCache;
 
+    @Autowired
+    AppConfig appConfig;
+
     /**
      * 初始化
      */
@@ -51,8 +55,8 @@ public class Client {
 
         Response<LoginVO> resposne = routeAPI.login(
                 UserLoginDTO.builder()
-                        .account("wangzhichao")
-                        .password("123456").build()
+                        .account(appConfig.getUsername())
+                        .password(appConfig.getPassword()).build()
         );
 
         log.info("用户登录结果: {}", resposne.toString());

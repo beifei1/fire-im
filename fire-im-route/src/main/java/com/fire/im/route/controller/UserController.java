@@ -9,12 +9,14 @@ import com.fire.im.common.utils.SnowflakeId;
 import com.fire.im.route.api.pojo.dto.RegisterDTO;
 import com.fire.im.route.api.pojo.dto.UserLoginDTO;
 import com.fire.im.route.api.pojo.dto.UserOfflineDTO;
+import com.fire.im.route.api.pojo.vo.UserVO;
 import com.fire.im.route.api.pojo.vo.LoginVO;
 import com.fire.im.route.config.AppGlobalConfig;
 import com.fire.im.route.service.IRouteService;
 import com.fire.im.route.utils.RedisUtil;
 import com.fire.im.route.utils.RouterUtil;
 import com.fire.im.route.utils.ServerHolder;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
 /**
  * @Author: wangzc
@@ -40,8 +43,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Api(tags = "用户接口")
 public class UserController {
 
-    //单机部署测试用
-    static AtomicInteger userIdProducer = new AtomicInteger(0);
+//    //单机部署测试用
+//    static AtomicInteger userIdProducer = new AtomicInteger(0);
 
     @Autowired
     Router router;
@@ -153,6 +156,29 @@ public class UserController {
         log.info("用户: {} offline", param.getUserIds().toString());
         routeService.userOffline(param);
         return Response.success();
+    }
+
+
+    /**
+     * 所有联系人
+     * @return
+     */
+    @PostMapping("/users")
+    @ApiOperation("所有联系人")
+    public Response<List<UserVO>> register() {
+        //获取所有保存的路由信息
+        Set<String> routes = redisUtil.keys(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + "*");
+        List<UserVO> users = Lists.newArrayListWithCapacity(routes.size());
+        routes.stream().forEach(key -> {
+            String userId = (String)redisUtil.hget(key, RouterUtil.Consts.Profile.USER_ID_PARAM);
+            String nickName = (String)redisUtil.hget(key,RouterUtil.Consts.Profile.USER_NICKNAME_PARAM);
+            String avatar = (String)redisUtil.hget(key,RouterUtil.Consts.Profile.USER_AVATAR_PARAM);
+            users.add(
+                    UserVO.builder().userId(userId).nickName(nickName).avatar(avatar).build()
+            );
+        });
+
+        return Response.success(users);
     }
 
 }

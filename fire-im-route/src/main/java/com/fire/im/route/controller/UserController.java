@@ -1,9 +1,12 @@
 package com.fire.im.route.controller;
 
+import com.fire.im.common.exceptions.IMException;
 import com.fire.im.common.pojo.Response;
 import com.fire.im.common.pojo.Void;
 import com.fire.im.common.pojo.dto.Server;
 import com.fire.im.common.route.Router;
+import com.fire.im.common.utils.SnowflakeId;
+import com.fire.im.route.api.pojo.dto.RegisterDTO;
 import com.fire.im.route.api.pojo.dto.UserLoginDTO;
 import com.fire.im.route.api.pojo.dto.UserOfflineDTO;
 import com.fire.im.route.api.pojo.vo.LoginVO;
@@ -16,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -53,6 +58,9 @@ public class UserController {
     @Autowired
     AppGlobalConfig appConfig;
 
+    @Autowired
+    SnowflakeId snowflake;
+
     /**
      * 用户登录
      * @param param
@@ -62,8 +70,17 @@ public class UserController {
     @ApiOperation("用户登录")
     public Response<LoginVO> login(@Valid @RequestBody UserLoginDTO param) {
 
-        //TODO 伪实现
-        String userId = String.valueOf(userIdProducer.incrementAndGet());
+        if (!redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
+            throw new IMException("account or password not exists!");
+        }
+
+        String password = DigestUtils.md5Hex(param.getPassword());
+        String dbPassword = (String)redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_PASSWORD_PARAM);
+        if (!StringUtils.equalsIgnoreCase(password, dbPassword)) {
+            throw new IMException("account or password not exists!");
+        }
+
+        String userId = (String)redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_ID_PARAM);
         //生成token
         String token = DigestUtils.md5Hex(userId + appConfig.getTokenSecret());
         //选择服务器
@@ -77,7 +94,7 @@ public class UserController {
         routeService.isServerAvailable(server);
 
         //保存路由信息
-        routeService.saveRouteInfo(userId,serverStr);
+        routeService.saveRouteInfo(userId, serverStr);
 
         //保存用户信息
         redisUtil.hset(RouterUtil.Consts.USER_INFO_PREFIX + token, RouterUtil.Consts.USER_ID_PARAMETER, userId);
@@ -94,7 +111,36 @@ public class UserController {
         return Response.success(resp);
     }
 
-//    public Response<RegisterVO>
+    /**
+     * 用户注册
+     * @param param
+     * @return
+     */
+    @PostMapping("/register")
+    @ApiOperation("用户注册")
+    public Response<Void> register(@Valid @RequestBody RegisterDTO param) {
+       if (redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
+           throw new IMException("account already exists!");
+       }
+       //密码
+        redisUtil.hset(
+                RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
+                RouterUtil.Consts.Profile.USER_PASSWORD_PARAM, DigestUtils.md5Hex(param.getPassword()));
+       //头像
+        redisUtil.hset(
+                RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
+                RouterUtil.Consts.Profile.USER_NICKNAME_PARAM, StringUtils.trimToNull(param.getNickName()));
+        //昵称
+        redisUtil.hset(
+                RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
+                RouterUtil.Consts.Profile.USER_AVATAR_PARAM, StringUtils.trimToNull(param.getAvatar()));
+        //userId
+        redisUtil.hset(
+                RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
+                RouterUtil.Consts.Profile.USER_ID_PARAM, String.valueOf(snowflake.nextId()));
+
+        return Response.success();
+    }
 
     /**
      * 用户下线，清除路由关系

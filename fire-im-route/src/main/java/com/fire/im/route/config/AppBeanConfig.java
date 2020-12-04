@@ -1,6 +1,7 @@
 package com.fire.im.route.config;
 
 import com.fire.im.common.route.Router;
+import com.fire.im.common.utils.SnowflakeId;
 import com.fire.im.route.task.Subscription;
 import com.fire.im.server.api.ServerAPI;
 import com.google.common.cache.CacheBuilder;
@@ -111,5 +112,14 @@ public class AppBeanConfig {
                 .options(new Request.Options(1000, 3500))
                 .retryer(new Retryer.Default(5000, 5000, 3))
                 .target(ServerAPI.class, "http://127.0.0.1:1111");
+    }
+
+    /**
+     * 雪花Id
+     * @return
+     */
+    @Bean
+    SnowflakeId snowflakeId() {
+        return new SnowflakeId(appConfig.getSnowflakeMachineId().longValue(),appConfig.getSnowflakeDatacenterId().longValue());
     }
 }

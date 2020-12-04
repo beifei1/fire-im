@@ -23,4 +23,8 @@ public class AppGlobalConfig {
 
     private String tokenSecret;
 
+    private Integer snowflakeMachineId;
+
+    private Integer snowflakeDatacenterId;
+
 }

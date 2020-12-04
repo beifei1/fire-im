@@ -92,7 +92,7 @@ public class AppBeanConfig {
      * @return
      */
     @Bean
-    public CommandLineRunner run() {
+    public CommandLineRunner subscribeCommand() {
         return args -> {
             //使用线程池调度
             ExecutorService pool = Executors.newFixedThreadPool(1);

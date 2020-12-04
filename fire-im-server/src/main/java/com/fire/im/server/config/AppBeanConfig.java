@@ -55,7 +55,7 @@ public class AppBeanConfig {
      * @return
      */
     @Bean
-    CommandLineRunner runner() {
+    CommandLineRunner registerCommand() {
         return args -> {
             //节点名称
             String addr = InetAddress.getLocalHost().getHostAddress();

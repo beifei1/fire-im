@@ -26,4 +26,8 @@ public class LoginVO implements Serializable {
     private String token;
 
     private String userId;
+
+    private String nickName;
+
+    private String avatar;
 }

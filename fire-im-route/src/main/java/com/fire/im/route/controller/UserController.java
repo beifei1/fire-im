@@ -66,6 +66,7 @@ public class UserController {
 
     /**
      * 用户登录
+     *
      * @param param
      * @return
      */
@@ -78,12 +79,16 @@ public class UserController {
         }
 
         String password = DigestUtils.md5Hex(param.getPassword());
-        String dbPassword = (String)redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_PASSWORD_PARAM);
+        String dbPassword = (String) redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_PASSWORD_PARAM);
         if (!StringUtils.equalsIgnoreCase(password, dbPassword)) {
             throw new IMException("account or password not exists!");
         }
 
-        String userId = (String)redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_ID_PARAM);
+        String userId = (String) redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_ID_PARAM);
+
+        String avatar = (String) redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_AVATAR_PARAM);
+
+        String nickName = (String) redisUtil.hget(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(), RouterUtil.Consts.Profile.USER_NICKNAME_PARAM);
         //生成token
         String token = DigestUtils.md5Hex(userId + appConfig.getTokenSecret());
         //选择服务器
@@ -109,27 +114,31 @@ public class UserController {
                 .socketPort(server.getSocketPort())
                 .ip(server.getIp())
                 .userId(userId)
-                .token(token).build();
+                .token(token)
+                .avatar(avatar)
+                .nickName(nickName)
+                .build();
 
         return Response.success(resp);
     }
 
     /**
      * 用户注册
+     *
      * @param param
      * @return
      */
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public Response<Void> register(@Valid @RequestBody RegisterDTO param) {
-       if (redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
-           throw new IMException("account already exists!");
-       }
-       //密码
+        if (redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
+            throw new IMException("account already exists!");
+        }
+        //密码
         redisUtil.hset(
                 RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
                 RouterUtil.Consts.Profile.USER_PASSWORD_PARAM, DigestUtils.md5Hex(param.getPassword()));
-       //头像
+        //头像
         redisUtil.hset(
                 RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount(),
                 RouterUtil.Consts.Profile.USER_NICKNAME_PARAM, StringUtils.trimToNull(param.getNickName()));
@@ -147,6 +156,7 @@ public class UserController {
 
     /**
      * 用户下线，清除路由关系
+     *
      * @param param
      * @return
      */
@@ -161,6 +171,7 @@ public class UserController {
 
     /**
      * 所有联系人
+     *
      * @return
      */
     @PostMapping("/users")
@@ -170,9 +181,9 @@ public class UserController {
         Set<String> routes = redisUtil.keys(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + "*");
         List<UserVO> users = Lists.newArrayListWithCapacity(routes.size());
         routes.stream().forEach(key -> {
-            String userId = (String)redisUtil.hget(key, RouterUtil.Consts.Profile.USER_ID_PARAM);
-            String nickName = (String)redisUtil.hget(key,RouterUtil.Consts.Profile.USER_NICKNAME_PARAM);
-            String avatar = (String)redisUtil.hget(key,RouterUtil.Consts.Profile.USER_AVATAR_PARAM);
+            String userId = (String) redisUtil.hget(key, RouterUtil.Consts.Profile.USER_ID_PARAM);
+            String nickName = (String) redisUtil.hget(key, RouterUtil.Consts.Profile.USER_NICKNAME_PARAM);
+            String avatar = (String) redisUtil.hget(key, RouterUtil.Consts.Profile.USER_AVATAR_PARAM);
             users.add(
                     UserVO.builder().userId(userId).nickName(nickName).avatar(avatar).build()
             );

@@ -29,6 +29,20 @@ public class RouterUtil {
 
         String USER_TOKEN_PARAMETER = "token";
 
+        interface Profile {
+
+            String USER_PROFILE_PREFIX = "im:user:profile:";
+
+            String USER_PASSWORD_PARAM = "password";
+
+            String USER_NICKNAME_PARAM = "nickname";
+
+            String USER_AVATAR_PARAM = "avatar";
+
+            String USER_ID_PARAM = "userId";
+
+        }
+
     }
 
     /**

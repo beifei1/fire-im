@@ -14,6 +14,10 @@ zookeeper，redis
 
 轮询，随机，权重随机，一致性hash，第一个，最后一个
 
+##### 架构
+
+![image](https://github.com/beifei1/fire-im/blob/main/assets/im.png)
+
 ##### 使用
 
 server
@@ -39,4 +43,5 @@ fire-im.client.route-url=路由服务地址
 ```
 
 启动server,route和client,通过route server/doc.html对指定用户推送消息
+
 

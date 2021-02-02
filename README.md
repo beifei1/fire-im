@@ -1,6 +1,6 @@
 ## 基于netty和spring boot实现的分布式IM服务
 
-包含server,route server,client demo
+包含IM Server,IM Route Server,client demo
 
 ##### 应用依赖
 

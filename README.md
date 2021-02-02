@@ -25,7 +25,7 @@ server
 ```properties
 fire-im.server.zk-address=zookeeper地址,ip:port
 fire-im.server.route-url=路由服务地址
-fire-im.server.weight=当前机器的权重值,integer,路由策略为随机权重时使用
+fire-im.server.weight=当前机器的权重值,int,路由策略为随机权重时使用
 ```
 
 route

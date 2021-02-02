@@ -15,6 +15,12 @@ import io.netty.channel.SimpleChannelInboundHandler;
 @ChannelHandler.Sharable
 public class ServerAuthenticationHandler extends SimpleChannelInboundHandler<ImMessage.RequestMessage> {
 
+    /**
+     * 第一个执行的逻辑，如果该信息为非登录信息，并且channel的属性为未授权，则直接关闭channel
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessage.RequestMessage msg) throws Exception {
         //如果是非登录请求,则判断channel是否已经鉴权,如果未鉴权，关闭channel，否则进入下一个handler

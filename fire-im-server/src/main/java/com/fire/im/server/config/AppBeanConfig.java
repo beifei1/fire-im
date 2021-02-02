@@ -51,7 +51,7 @@ public class AppBeanConfig {
     }
 
     /**
-     * 向服务器注册自己
+     * 启动后向zk根节点注册自身服务器信息
      * @return
      */
     @Bean

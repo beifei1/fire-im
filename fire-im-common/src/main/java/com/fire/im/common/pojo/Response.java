@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * 通用响应体
  * @Author: wangzc
  * @Date: 2020/11/24 11:24
  */

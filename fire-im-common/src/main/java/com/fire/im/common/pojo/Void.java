@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * 定义一个空对象
  * @Author: wangzc
  * @Date: 2020/11/25 17:23
  */

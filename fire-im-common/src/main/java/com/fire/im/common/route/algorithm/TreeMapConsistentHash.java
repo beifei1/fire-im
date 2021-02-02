@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import java.util.List;
 
 /**
- * 使用红黑树的 tailMap找到比传入节点大的Key
+ * 一致性hash算法实现
  * @Author: wangzc
  * @Date: 2020/11/25 9:51
  */

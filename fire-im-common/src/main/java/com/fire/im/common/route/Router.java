@@ -3,6 +3,7 @@ package com.fire.im.common.route;
 import java.util.List;
 
 /**
+ * 抽象的路由策略
  * @Author: wangzc
  * @Date: 2020/11/25 9:47
  */

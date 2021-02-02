@@ -88,7 +88,7 @@ public class AppBeanConfig {
     }
 
     /**
-     * 应用启动时订阅节点信息
+     * 应用启动时订阅根节点信息，所有的im server服务器会注册到该根节点下
      * @return
      */
     @Bean

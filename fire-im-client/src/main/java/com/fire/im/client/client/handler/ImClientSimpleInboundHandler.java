@@ -29,6 +29,7 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
         super.channelInactive(ctx);
     }
 
+    //test
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessage.RequestMessage msg) throws Exception {
         InetSocketAddress addr = (InetSocketAddress) ctx.channel().remoteAddress();

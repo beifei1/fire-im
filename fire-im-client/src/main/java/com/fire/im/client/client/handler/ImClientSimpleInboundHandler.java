@@ -23,13 +23,23 @@ import java.util.Objects;
 @ChannelHandler.Sharable
 public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<ImMessage.RequestMessage> {
 
+    /**
+     * 当连接断开时触发
+     * @param ctx
+     * @throws Exception
+     */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         //TODO 断线重连逻辑
         super.channelInactive(ctx);
     }
 
-    //test
+    /**
+     * 读取消息
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ImMessage.RequestMessage msg) throws Exception {
         InetSocketAddress addr = (InetSocketAddress) ctx.channel().remoteAddress();
@@ -78,6 +88,11 @@ public class ImClientSimpleInboundHandler extends SimpleChannelInboundHandler<Im
         super.userEventTriggered(ctx, evt);
     }
 
+    /**
+     * 建立连接时触发
+     * @param ctx
+     * @throws Exception
+     */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("im server connect success!");

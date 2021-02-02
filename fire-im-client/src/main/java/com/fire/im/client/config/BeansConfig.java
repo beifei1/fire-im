@@ -24,6 +24,10 @@ public class BeansConfig {
     @Autowired
     private AppConfig appConfig;
 
+    /**
+     * 把feign实例纳入到spring容器管理
+     * @return
+     */
     @Bean
     RouteAPI routeAPI() {
         return Feign.builder()
@@ -34,6 +38,10 @@ public class BeansConfig {
                 .target(RouteAPI.class, appConfig.getRouteUrl());
     }
 
+    /**
+     * 把loadingcache纳入到spring容器管理
+     * @return
+     */
     @Bean
     public LoadingCache<String, String> loadingCache() {
         return CacheBuilder.newBuilder()

@@ -25,13 +25,13 @@ server
 ```properties
 fire-im.server.zk-address=zookeeper地址,ip:port
 fire-im.server.route-url=路由服务地址
-fire-im.server.weight=当前机器的权重值,int,路由策略为随机权重时使用
+fire-im.server.weight=使用随机权重路由策略时，当前机器的权重值
 ```
 
 route
 
 ```properties
-fire-im.route.zk-address=zookeeper地址,ip:port
+fire-im.route.zk-address=zookeeper地址
 fire-im.route.route-strategy=使用的路由策略
 redis config
 ```

@@ -7,21 +7,21 @@ import com.fire.im.route.api.pojo.dto.P2PChatRequestDTO;
 import com.fire.im.route.service.IMessageService;
 import com.fire.im.route.utils.RedisUtil;
 import com.fire.im.route.utils.RouterUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 /**
  * @Author: wangzc
  * @Date: 2020/11/25 15:31
  */
-@Api(tags = "聊天接口")
+@Tag(name = "聊天接口")
 @RequestMapping("/chat")
 @RestController
 public class ChatController {
@@ -37,7 +37,7 @@ public class ChatController {
      * @return
      */
     @PostMapping("/p2p")
-    @ApiOperation("点对点聊天")
+    @Operation(summary = "点对点聊天")
     public Response<Void> p2pChat(@Valid @RequestBody P2PChatRequestDTO param) {
 
         String userId = (String)redisUtil.hget(RouterUtil.Consts.USER_INFO_PREFIX + param.getToken(), RouterUtil.Consts.USER_ID_PARAMETER);
@@ -52,7 +52,7 @@ public class ChatController {
      * @return
      */
     @PostMapping("/broadcast")
-    @ApiOperation("群发广播")
+    @Operation(summary = "群发广播")
     public Response<Void> broadcast(@Valid @RequestBody BroadcastRequestDTO param) {
         String userId = (String)redisUtil.hget(RouterUtil.Consts.USER_INFO_PREFIX + param.getToken(), RouterUtil.Consts.USER_ID_PARAMETER);
         messageService.broadcastMessage(userId, param.getMsg());

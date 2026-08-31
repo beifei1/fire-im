@@ -1,10 +1,9 @@
 package com.fire.im.route.api.pojo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,12 +16,12 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("用户下线请求体")
+@Schema(description = "用户下线请求体")
 public class UserOfflineDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @ApiModelProperty(value = "userId", required = true)
+    @Schema(description = "userId", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<String> userIds;
 }

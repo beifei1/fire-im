@@ -13,23 +13,23 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>3.4.5</version>
     </parent>
 
     <properties>
-        <java.version>1.8</java.version>
-        <lombok.version>1.18.16</lombok.version>
-        <netty.version>4.1.54.Final</netty.version>
-        <fastjson.version>1.2.75</fastjson.version>
-        <apache.common.version>3.11</apache.common.version>
-        <apache.common.codec>1.15</apache.common.codec>
-        <guava.version>29.0-jre</guava.version>
+        <java.version>17</java.version>
+        <lombok.version>1.18.36</lombok.version>
+        <netty.version>4.1.118.Final</netty.version>
+        <apache.common.version>3.17.0</apache.common.version>
+        <apache.common.codec>1.17.1</apache.common.codec>
+        <guava.version>33.4.0-jre</guava.version>
         <zkclient.version>0.11</zkclient.version>
-        <protobuf.version>3.4.0</protobuf.version>
+        <protobuf.version>3.25.5</protobuf.version>
         <fire-im.version>0.0.1-SNAPSHOT</fire-im.version>
-        <netflix.feign.version>8.18.0</netflix.feign.version>
-        <knife4j.starter.version>2.0.4</knife4j.starter.version>
-        <javax-validation.version>2.0.1.Final</javax-validation.version>
+        <knife4j.starter.version>4.5.0</knife4j.starter.version>
+        <jakarta.validation.version>3.1.0</jakarta.validation.version>
+        <openfeign.version>13.14</openfeign.version>
+        <swagger.version>2.2.28</swagger.version>
     </properties>
 
     <modules>
@@ -38,6 +38,8 @@
         <module>fire-im-route-api</module>
         <module>fire-im-server</module>
         <module>fire-im-route</module>
+        <module>fire-im-client</module>
+        <module>firm-im-user</module>
     </modules>
 
     <dependencyManagement>
@@ -71,12 +73,6 @@
                 <groupId>com.fire.im.route.api</groupId>
                 <artifactId>fire-im-route-api</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <!--alibaba fastjson-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
             <!--apache common lang3-->
             <dependency>
@@ -116,28 +112,37 @@
                 <version>${zkclient.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.netflix.feign</groupId>
-                <artifactId>feign-core</artifactId>
-                <version>${netflix.feign.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.netflix.feign</groupId>
-                <artifactId>feign-jackson</artifactId>
-                <version>${netflix.feign.version}</version>
-            </dependency>
-
+            <!--knife4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.starter.version}</version>
             </dependency>
 
+            <!--openfeign-->
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${javax-validation.version}</version>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-jackson</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+
+            <!--swagger v3 annotations-->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!--jakarta validation-->
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -147,11 +152,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>

@@ -8,7 +8,7 @@ import com.fire.im.route.api.pojo.vo.LoginVO;
 import feign.Headers;
 import feign.RequestLine;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 /**
  * @Author: wangzc

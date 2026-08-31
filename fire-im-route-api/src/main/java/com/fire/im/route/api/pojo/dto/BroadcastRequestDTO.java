@@ -1,12 +1,11 @@
 package com.fire.im.route.api.pojo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @Author: wangzc
@@ -15,15 +14,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("群发广播请求体")
+@Schema(description = "群发广播请求体")
 public class BroadcastRequestDTO {
 
     @NotBlank
-    @ApiModelProperty(value = "token", required = true)
+    @Schema(description = "token", requiredMode = Schema.RequiredMode.REQUIRED)
     private String token;
 
     @NotBlank
-    @ApiModelProperty(value = "msg", required = true)
+    @Schema(description = "msg", requiredMode = Schema.RequiredMode.REQUIRED)
     private String msg;
 
 }

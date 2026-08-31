@@ -1,12 +1,11 @@
 package com.fire.im.route.api.pojo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @Author: wangzc
@@ -15,19 +14,19 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("点对点聊天请求体")
+@Schema(description = "点对点聊天请求体")
 public class P2PChatRequestDTO {
 
     @NotBlank
-    @ApiModelProperty(value = "token", required = true)
+    @Schema(description = "token", requiredMode = Schema.RequiredMode.REQUIRED)
     private String token;
 
     @NotBlank
-    @ApiModelProperty(value = "toUserId", required = true)
+    @Schema(description = "toUserId", requiredMode = Schema.RequiredMode.REQUIRED)
     private String toUserId;
 
     @NotBlank
-    @ApiModelProperty(value = "msg", required = true)
+    @Schema(description = "msg", requiredMode = Schema.RequiredMode.REQUIRED)
     private String msg;
 
 }

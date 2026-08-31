@@ -17,8 +17,8 @@ import com.fire.im.route.utils.RedisUtil;
 import com.fire.im.route.utils.RouterUtil;
 import com.fire.im.route.utils.ServerHolder;
 import com.google.common.collect.Lists;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.List;
@@ -40,7 +40,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Api(tags = "用户接口")
+@Tag(name = "用户接口")
 public class UserController {
 
 //    //单机部署测试用
@@ -71,7 +71,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation("用户登录")
+    @Operation(summary = "用户登录")
     public Response<LoginVO> login(@Valid @RequestBody UserLoginDTO param) {
 
         if (!redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
@@ -129,7 +129,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    @ApiOperation("用户注册")
+    @Operation(summary = "用户注册")
     public Response<Void> register(@Valid @RequestBody RegisterDTO param) {
         if (redisUtil.hasKey(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + param.getAccount())) {
             throw new IMException("account already exists!");
@@ -161,7 +161,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/offline")
-    @ApiOperation("用户下线")
+    @Operation(summary = "用户下线")
     public Response<Void> offline(@Valid @RequestBody UserOfflineDTO param) {
         log.info("用户: {} offline", param.getUserIds().toString());
         routeService.userOffline(param);
@@ -175,7 +175,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/users")
-    @ApiOperation("所有联系人")
+    @Operation(summary = "所有联系人")
     public Response<List<UserVO>> register() {
         //获取所有保存的路由信息
         Set<String> routes = redisUtil.keys(RouterUtil.Consts.Profile.USER_PROFILE_PREFIX + "*");
